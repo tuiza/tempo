@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
+import { EvilIcons } from "@expo/vector-icons";
 import { useState } from "react";
 
 export default function Index() {
@@ -18,6 +18,10 @@ export default function Index() {
 
   function toggleSearch() {
     setShowSearch(!showSearch);
+  }
+
+  function handleLocation(item: number) {
+    console.log(item);
   }
 
   return (
@@ -50,11 +54,84 @@ export default function Index() {
               className="rounded-full  p-2 m-1"
               onPress={() => toggleSearch()}
             >
-              <AntDesign name="search1" size={20} color="white" />
+              <EvilIcons name="search" size={20} color="white" />
             </TouchableOpacity>
           </View>
 
           {/* locations */}
+
+          {locations.length > 0 && showSearch && (
+            <View className="absolute w-full bg-gray-300 top-16 rounded-3xl ">
+              <FlatList
+                data={locations}
+                renderItem={({ item, index }) => {
+                  const showBorder = index + 1 != locations.length;
+                  const borderClass =
+                    showBorder && "border-b-2 border-b-gray-400";
+                  return (
+                    <TouchableOpacity
+                      onPress={() => handleLocation(item)}
+                      key={index}
+                      className={`flex-row items-center border-0 p-3 px-4 mb-1 ${borderClass}`}
+                    >
+                      <EvilIcons name="location" size={20} color="black" />
+
+                      <Text className="text-black text-lg ml-2">
+                        Ananindeua, PA
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                }}
+              />
+            </View>
+          )}
+        </View>
+
+        {/* forecast */}
+        <View className="mx-4 justify-around flex-1 mb-2">
+          <Text className="text-white text-center font-bold text-2xl">
+            Ananindeua,
+            <Text className="text-lg font-semibold text-gray-300 pl-2">
+              Pará
+            </Text>
+          </Text>
+          <View className="flex-row justify-center">
+            <Image
+              source={require("../assets/images/partlycloudy.png")}
+              className="w-52 h-52"
+            />
+          </View>
+          <View className="space-y-2 items-center">
+            <Text className="font-bold text-6xl text-white ml-5">35&#176;</Text>
+            <Text className="text-xl text-white tracking-widest">
+              Parcialmente nublado
+            </Text>
+          </View>
+          <View className="flex-row justify-between mx-4">
+            <View className="flex-row space-x-2 intems-center">
+              <Image
+                source={require("../assets/icons/wind.png")}
+                className="w-6 h-6"
+              />
+              <Text className="text-white font-semibold text-base">22km</Text>
+            </View>
+            <View className="flex-row space-x-2 items-center">
+              <Image
+                source={require("../assets/icons/drop.png")}
+                className="w-6 h-6"
+              />
+              <Text className="text-white font-semibold text-base">23%</Text>
+            </View>
+            <View className="flex-row space-x-2 items-center">
+              <Image
+                source={require("../assets/icons/sun.png")}
+                className="w-6 h-6"
+              />
+              <Text className="text-white font-semibold text-base">
+                6:05 AM
+              </Text>
+            </View>
+          </View>
         </View>
       </SafeAreaView>
     </View>
