@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
   FlatList,
+  ScrollView,
 } from "react-native";
 import { EvilIcons } from "@expo/vector-icons";
 import { useState } from "react";
@@ -132,6 +133,97 @@ export default function Index() {
               </Text>
             </View>
           </View>
+        </View>
+
+        {/* dias da semana */}
+        <View className="mb-2 space-y-3">
+          <View className="flex-row items-cnter mx-5 space-x-2">
+            <EvilIcons name="calendar" size={30} color="white" />
+            <Text className="text-base text-white">Previsão do tempo</Text>
+          </View>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ paddingHorizontal: 15, gap: 15 }}
+          >
+            <View
+              className="flex justify-center items-center w-24 rounded-3xl py-3 space-y-3"
+              style={{ backgroundColor: theme.bgWhite(0.15) }}
+            >
+              <Image
+                source={require(`../assets/images/heavyrain.png`)}
+                className="h-11 w-11"
+              />
+              <Text className="text-white">Segunda</Text>
+              <Text className="text-white text-xl font-semibold">35&#176;</Text>
+            </View>
+            <View
+              className="flex justify-center items-center w-24 rounded-3xl py-3 space-y-3"
+              style={{ backgroundColor: theme.bgWhite(0.15) }}
+            >
+              <Image
+                source={require(`../assets/images/heavyrain.png`)}
+                className="h-11 w-11"
+              />
+              <Text className="text-white">Terça</Text>
+              <Text className="text-white text-xl font-semibold">35&#176;</Text>
+            </View>
+            <View
+              className="flex justify-center items-center w-24 rounded-3xl py-3 space-y-3"
+              style={{ backgroundColor: theme.bgWhite(0.15) }}
+            >
+              <Image
+                source={require(`../assets/images/heavyrain.png`)}
+                className="h-11 w-11"
+              />
+              <Text className="text-white">Quarta</Text>
+              <Text className="text-white text-xl font-semibold">35&#176;</Text>
+            </View>
+            <View
+              className="flex justify-center items-center w-24 rounded-3xl py-3 space-y-3"
+              style={{ backgroundColor: theme.bgWhite(0.15) }}
+            >
+              <Image
+                source={require(`../assets/images/heavyrain.png`)}
+                className="h-11 w-11"
+              />
+              <Text className="text-white">Quinta</Text>
+              <Text className="text-white text-xl font-semibold">35&#176;</Text>
+            </View>
+            <View
+              className="flex justify-center items-center w-24 rounded-3xl py-3 space-y-3"
+              style={{ backgroundColor: theme.bgWhite(0.15) }}
+            >
+              <Image
+                source={require(`../assets/images/heavyrain.png`)}
+                className="h-11 w-11"
+              />
+              <Text className="text-white">Sexta</Text>
+              <Text className="text-white text-xl font-semibold">35&#176;</Text>
+            </View>
+            <View
+              className="flex justify-center items-center w-24 rounded-3xl py-3 space-y-3"
+              style={{ backgroundColor: theme.bgWhite(0.15) }}
+            >
+              <Image
+                source={require(`../assets/images/heavyrain.png`)}
+                className="h-11 w-11"
+              />
+              <Text className="text-white">Sábado</Text>
+              <Text className="text-white text-xl font-semibold">35&#176;</Text>
+            </View>
+            <View
+              className="flex justify-center items-center w-24 rounded-3xl py-3 space-y-3"
+              style={{ backgroundColor: theme.bgWhite(0.15) }}
+            >
+              <Image
+                source={require(`../assets/images/heavyrain.png`)}
+                className="h-11 w-11"
+              />
+              <Text className="text-white">Domingo</Text>
+              <Text className="text-white text-xl font-semibold">35&#176;</Text>
+            </View>
+          </ScrollView>
         </View>
       </SafeAreaView>
     </View>
