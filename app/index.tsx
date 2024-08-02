@@ -11,9 +11,11 @@ import {
   ScrollView,
 } from "react-native";
 import { EvilIcons } from "@expo/vector-icons";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import SearchInput from "@/components/SearchInput";
 import DailyForecast from "@/components/DailyForecast";
+import { debounce } from "lodash"
+import { getLocations } from "@/api/weather";
 
 export default function Index() {
   const [showSearch, setShowSearch] = useState(true);
@@ -22,6 +24,18 @@ export default function Index() {
   function toggleSearch() {
     setShowSearch(!showSearch);
   }
+
+  function handleSearchInput(value) {
+    /* getLocations({
+      city: 'Ananindeua',
+      day: ''
+    }) */
+
+    console.log(value)
+
+  }
+
+  const handleTextDebounce = useCallback(debounce(handleSearchInput, 1200), [])
 
   function handleLocation(item: number) {
     console.log(item);
@@ -37,7 +51,11 @@ export default function Index() {
       />
       <SafeAreaView className="flex flex-1">
         <View style={{ height: "7%" }} className="mx-4 relative z-50">
-          <SearchInput showSearch={showSearch} toggleSearch={toggleSearch} />
+          <SearchInput
+            showSearch={showSearch}
+            toggleSearch={toggleSearch}
+            handleSearchInput={handleTextDebounce}
+          />
           {/* locations */}
           {locations.length > 0 && showSearch && (
             <View className="absolute w-full bg-gray-300 top-16 rounded-3xl ">
@@ -124,12 +142,26 @@ export default function Index() {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ paddingHorizontal: 15, gap: 15 }}
           >
-            <DailyForecast day="segunda" img={require("../assets/images/heavyrain.png")} />
-            <DailyForecast day="terça" img={require("../assets/images/heavyrain.png")} />
-            <DailyForecast day="quarta" img={require("../assets/images/heavyrain.png")} />
-            <DailyForecast day="quinta" img={require("../assets/images/heavyrain.png")} />
-            <DailyForecast day="sexta" img={require("../assets/images/heavyrain.png")} />
-          
+            <DailyForecast
+              day="segunda"
+              img={require("../assets/images/heavyrain.png")}
+            />
+            <DailyForecast
+              day="terça"
+              img={require("../assets/images/heavyrain.png")}
+            />
+            <DailyForecast
+              day="quarta"
+              img={require("../assets/images/heavyrain.png")}
+            />
+            <DailyForecast
+              day="quinta"
+              img={require("../assets/images/heavyrain.png")}
+            />
+            <DailyForecast
+              day="sexta"
+              img={require("../assets/images/heavyrain.png")}
+            />
           </ScrollView>
         </View>
       </SafeAreaView>
