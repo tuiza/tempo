@@ -16,6 +16,7 @@ import { debounce } from "lodash";
 import { getLocations, ILocation, getForecast } from "@/api/weather";
 import WeatherData from "@/interfaces/WeatherData";
 import { weatherImages } from "@/constants/weatherImages";
+import getTimeFromDate from "@/utils/getTimeFromDate";
 
 export default function Index() {
   const [showSearch, setShowSearch] = useState(true);
@@ -38,14 +39,11 @@ export default function Index() {
   const handleTextDebounce = useCallback(debounce(handleSearchInput, 1200), []);
 
   async function handleLocation(location: ILocation) {
-    console.log(location);
-
     const locationForecast = await getForecast({
       city: location.name,
       day: 7,
     });
     setLocationForecast(locationForecast);
-    console.log("forecast", locationForecast);
     setShowSearch(!showSearch);
   }
 
@@ -108,7 +106,11 @@ export default function Index() {
               <View className="flex-row justify-center">
                 <Image
                   source={
-                    weatherImages[locationForecast.current?.condition?.text]
+                    weatherImages[
+                      locationForecast.current?.condition?.text
+                        .toLowerCase()
+                        .trimEnd()
+                    ]
                   }
                   className="w-52 h-52"
                 />
@@ -146,7 +148,7 @@ export default function Index() {
                     className="w-6 h-6"
                   />
                   <Text className="text-white font-semibold text-base">
-                    6:05 AM
+                    {getTimeFromDate(locationForecast.location.localtime)}
                   </Text>
                 </View>
               </View>
@@ -155,33 +157,29 @@ export default function Index() {
             <View className="mb-2 space-y-3">
               <View className="flex-row items-cnter mx-5 space-x-2">
                 <EvilIcons name="calendar" size={30} color="white" />
-                <Text className="text-base text-white">Previsão do tempo</Text>
+                <Text className="text-base text-white">Daily Forecast</Text>
               </View>
               <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{ paddingHorizontal: 15, gap: 15 }}
               >
-                <DailyForecast
-                  day="segunda"
-                  img={require("../assets/images/heavyrain.png")}
-                />
-                <DailyForecast
-                  day="terça"
-                  img={require("../assets/images/heavyrain.png")}
-                />
-                <DailyForecast
-                  day="quarta"
-                  img={require("../assets/images/heavyrain.png")}
-                />
-                <DailyForecast
-                  day="quinta"
-                  img={require("../assets/images/heavyrain.png")}
-                />
-                <DailyForecast
-                  day="sexta"
-                  img={require("../assets/images/heavyrain.png")}
-                />
+                {locationForecast.forecast?.forecastday?.map(
+                  ({ day }, index) => {
+                    const days = ["Monday", "Tuesday", "Wendsday"];
+                    return (
+                      <DailyForecast
+                        day={days[index]}
+                        img={
+                          weatherImages[
+                            day.condition.text.toLowerCase().trimEnd()
+                          ]
+                        }
+                        temp={day.avgtemp_c}
+                      />
+                    );
+                  }
+                )}
               </ScrollView>
             </View>
           </>
