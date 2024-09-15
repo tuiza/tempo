@@ -1,11 +1,9 @@
-import { theme } from "@/theme";
 import { StatusBar } from "expo-status-bar";
 import {
   Text,
   View,
   Image,
   SafeAreaView,
-  TextInput,
   TouchableOpacity,
   FlatList,
   ScrollView,
@@ -14,36 +12,46 @@ import { EvilIcons } from "@expo/vector-icons";
 import { useCallback, useState } from "react";
 import SearchInput from "@/components/SearchInput";
 import DailyForecast from "@/components/DailyForecast";
-import { debounce } from "lodash"
-import { getLocations } from "@/api/weather";
+import { debounce } from "lodash";
+import { getLocations, ILocation, getForecast } from "@/api/weather";
+import WeatherData from "@/interfaces/WeatherData";
+import { weatherImages } from "@/constants/weatherImages";
 
 export default function Index() {
   const [showSearch, setShowSearch] = useState(true);
-  const [locations, setLocations] = useState([1, 2, 3]);
+  const [locations, setLocations] = useState<ILocation[]>([]);
+  const [locationForecast, setLocationForecast] = useState<WeatherData>();
 
   function toggleSearch() {
     setShowSearch(!showSearch);
   }
 
-  function handleSearchInput(value) {
-    /* getLocations({
-      city: 'Ananindeua',
-      day: ''
-    }) */
-
-    console.log(value)
-
+  async function handleSearchInput(city: string) {
+    if (city.length > 2) {
+      const locations = await getLocations(city);
+      setLocations(locations);
+    } else {
+      setLocations([]);
+    }
   }
 
-  const handleTextDebounce = useCallback(debounce(handleSearchInput, 1200), [])
+  const handleTextDebounce = useCallback(debounce(handleSearchInput, 1200), []);
 
-  function handleLocation(item: number) {
-    console.log(item);
+  async function handleLocation(location: ILocation) {
+    console.log(location);
+
+    const locationForecast = await getForecast({
+      city: location.name,
+      day: 7,
+    });
+    setLocationForecast(locationForecast);
+    console.log("forecast", locationForecast);
+    setShowSearch(!showSearch);
   }
 
   return (
-    <View className="flex-1 relative ">
-      <StatusBar style="light" />
+    <View className="flex-1 pt-10">
+      <StatusBar style="dark" />
       <Image
         className="absolute w-full h-full"
         blurRadius={70}
@@ -73,8 +81,11 @@ export default function Index() {
                     >
                       <EvilIcons name="location" size={20} color="black" />
 
-                      <Text className="text-black text-lg ml-2">
-                        Ananindeua, PA
+                      <Text
+                        className="text-black text-lg ml-2"
+                        numberOfLines={1}
+                      >
+                        {item.name}, {item.country}
                       </Text>
                     </TouchableOpacity>
                   );
@@ -85,85 +96,96 @@ export default function Index() {
         </View>
 
         {/* forecast */}
-        <View className="mx-4 justify-around flex-1 mb-2">
-          <Text className="text-white text-center font-bold text-2xl">
-            Ananindeua,
-            <Text className="text-lg font-semibold text-gray-300 pl-2">
-              Pará
-            </Text>
-          </Text>
-          <View className="flex-row justify-center">
-            <Image
-              source={require("../assets/images/partlycloudy.png")}
-              className="w-52 h-52"
-            />
-          </View>
-          <View className="space-y-2 items-center">
-            <Text className="font-bold text-6xl text-white ml-5">35&#176;</Text>
-            <Text className="text-xl text-white tracking-widest">
-              Parcialmente nublado
-            </Text>
-          </View>
-          <View className="flex-row justify-between mx-4">
-            <View className="flex-row space-x-2 intems-center">
-              <Image
-                source={require("../assets/icons/wind.png")}
-                className="w-6 h-6"
-              />
-              <Text className="text-white font-semibold text-base">22km</Text>
-            </View>
-            <View className="flex-row space-x-2 items-center">
-              <Image
-                source={require("../assets/icons/drop.png")}
-                className="w-6 h-6"
-              />
-              <Text className="text-white font-semibold text-base">23%</Text>
-            </View>
-            <View className="flex-row space-x-2 items-center">
-              <Image
-                source={require("../assets/icons/sun.png")}
-                className="w-6 h-6"
-              />
-              <Text className="text-white font-semibold text-base">
-                6:05 AM
+        {locationForecast && (
+          <>
+            <View className="mx-4 justify-around flex-1 ">
+              <Text className="text-white text-center font-bold text-2xl">
+                {locationForecast.location.name},
+                <Text className="text-lg font-semibold text-gray-300 ml-4">
+                  {" " + locationForecast.location?.region}
+                </Text>
               </Text>
+              <View className="flex-row justify-center">
+                <Image
+                  source={
+                    weatherImages[locationForecast.current?.condition?.text]
+                  }
+                  className="w-52 h-52"
+                />
+              </View>
+              <View className="space-y-2 items-center">
+                <Text className="font-bold text-6xl text-white ml-5">
+                  {locationForecast.current.temp_c}&#176;
+                </Text>
+                <Text className="text-xl text-white tracking-widest">
+                  {locationForecast.current?.condition.text}
+                </Text>
+              </View>
+              <View className="flex-row justify-between mx-4">
+                <View className="flex-row space-x-2 intems-center">
+                  <Image
+                    source={require("../assets/icons/wind.png")}
+                    className="w-6 h-6"
+                  />
+                  <Text className="text-white font-semibold text-base">
+                    {locationForecast.current?.wind_kph}km
+                  </Text>
+                </View>
+                <View className="flex-row space-x-2 items-center">
+                  <Image
+                    source={require("../assets/icons/drop.png")}
+                    className="w-6 h-6"
+                  />
+                  <Text className="text-white font-semibold text-base">
+                    {locationForecast.current.humidity}%
+                  </Text>
+                </View>
+                <View className="flex-row space-x-2 items-center">
+                  <Image
+                    source={require("../assets/icons/sun.png")}
+                    className="w-6 h-6"
+                  />
+                  <Text className="text-white font-semibold text-base">
+                    6:05 AM
+                  </Text>
+                </View>
+              </View>
             </View>
-          </View>
-        </View>
 
-        {/* dias da semana */}
-        <View className="mb-2 space-y-3">
-          <View className="flex-row items-cnter mx-5 space-x-2">
-            <EvilIcons name="calendar" size={30} color="white" />
-            <Text className="text-base text-white">Previsão do tempo</Text>
-          </View>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{ paddingHorizontal: 15, gap: 15 }}
-          >
-            <DailyForecast
-              day="segunda"
-              img={require("../assets/images/heavyrain.png")}
-            />
-            <DailyForecast
-              day="terça"
-              img={require("../assets/images/heavyrain.png")}
-            />
-            <DailyForecast
-              day="quarta"
-              img={require("../assets/images/heavyrain.png")}
-            />
-            <DailyForecast
-              day="quinta"
-              img={require("../assets/images/heavyrain.png")}
-            />
-            <DailyForecast
-              day="sexta"
-              img={require("../assets/images/heavyrain.png")}
-            />
-          </ScrollView>
-        </View>
+            <View className="mb-2 space-y-3">
+              <View className="flex-row items-cnter mx-5 space-x-2">
+                <EvilIcons name="calendar" size={30} color="white" />
+                <Text className="text-base text-white">Previsão do tempo</Text>
+              </View>
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{ paddingHorizontal: 15, gap: 15 }}
+              >
+                <DailyForecast
+                  day="segunda"
+                  img={require("../assets/images/heavyrain.png")}
+                />
+                <DailyForecast
+                  day="terça"
+                  img={require("../assets/images/heavyrain.png")}
+                />
+                <DailyForecast
+                  day="quarta"
+                  img={require("../assets/images/heavyrain.png")}
+                />
+                <DailyForecast
+                  day="quinta"
+                  img={require("../assets/images/heavyrain.png")}
+                />
+                <DailyForecast
+                  day="sexta"
+                  img={require("../assets/images/heavyrain.png")}
+                />
+              </ScrollView>
+            </View>
+          </>
+        )}
       </SafeAreaView>
     </View>
   );
