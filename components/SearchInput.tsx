@@ -5,7 +5,7 @@ import { TextInput, TouchableOpacity, View } from "react-native";
 type SearchInputProps = {
   showSearch: boolean;
   toggleSearch: () => void;
-  handleSearchInput: () => void
+  handleSearchInput: () => void;
 };
 
 export default function SearchInput({
@@ -13,7 +13,6 @@ export default function SearchInput({
   toggleSearch,
   handleSearchInput,
 }: SearchInputProps) {
-
   return (
     <View
       className="flex-row justify-end items-center rounded-full"
@@ -27,6 +26,7 @@ export default function SearchInput({
           placeholder="Pesquise a cidade"
           placeholderTextColor={"lightgray"}
           className="pl-6 h-11 pb-1 flex-1 text-base text-white"
+          numberOfLines={1}
         />
       )}
 
