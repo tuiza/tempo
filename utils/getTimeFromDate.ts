@@ -1,7 +1,13 @@
 export default function getTimeFromDate(date: string) {
-  return new Intl.DateTimeFormat("en-US", {
+  const datee = new Date(date);
+  const day = datee.toLocaleTimeString("en-US", {
+    hour12: true,
     hour: "numeric",
     minute: "numeric",
-    hour12: true,
-  }).format(new Date(date));
+  });
+  const dayName = datee.toLocaleDateString("en-US", {
+    weekday: "long",
+  });
+
+  return { day, dayName };
 }

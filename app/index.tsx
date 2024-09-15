@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   FlatList,
   ScrollView,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { EvilIcons } from "@expo/vector-icons";
 import { useCallback, useState } from "react";
@@ -48,14 +50,18 @@ export default function Index() {
   }
 
   return (
-    <View className="flex-1 pt-10">
+    <KeyboardAvoidingView
+      className="flex-1"
+      behavior="height"
+      //keyboardVerticalOffset={Platform.select({ ios: 0, android: 20 })}
+    >
       <StatusBar style="dark" />
       <Image
         className="absolute w-full h-full"
         blurRadius={70}
         source={require("../assets/images/bg.png")}
       />
-      <SafeAreaView className="flex flex-1">
+      <SafeAreaView className="flex flex-1 mt-12">
         <View style={{ height: "7%" }} className="mx-4 relative z-50">
           <SearchInput
             showSearch={showSearch}
@@ -98,7 +104,7 @@ export default function Index() {
           <>
             <View className="mx-4 justify-around flex-1 ">
               <Text className="text-white text-center font-bold text-2xl">
-                {locationForecast.location.name},
+                {locationForecast.location?.name},
                 <Text className="text-lg font-semibold text-gray-300 ml-4">
                   {" " + locationForecast.location?.region}
                 </Text>
@@ -148,7 +154,7 @@ export default function Index() {
                     className="w-6 h-6"
                   />
                   <Text className="text-white font-semibold text-base">
-                    {getTimeFromDate(locationForecast.location.localtime)}
+                    {getTimeFromDate(locationForecast.location.localtime).day}
                   </Text>
                 </View>
               </View>
@@ -164,27 +170,27 @@ export default function Index() {
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{ paddingHorizontal: 15, gap: 15 }}
               >
-                {locationForecast.forecast?.forecastday?.map(
-                  ({ day }, index) => {
-                    const days = ["Monday", "Tuesday", "Wendsday"];
-                    return (
-                      <DailyForecast
-                        day={days[index]}
-                        img={
-                          weatherImages[
-                            day.condition.text.toLowerCase().trimEnd()
-                          ]
-                        }
-                        temp={day.avgtemp_c}
-                      />
-                    );
-                  }
-                )}
+                {locationForecast.forecast?.forecastday?.map((item, index) => {
+                  const { day, date } = item;
+                  const days = ["Monday", "Tuesday", "Wendsday"];
+                  return (
+                    <DailyForecast
+                      key={index.toString()}
+                      day={getTimeFromDate(date).dayName}
+                      img={
+                        weatherImages[
+                          day.condition.text.toLowerCase().trimEnd()
+                        ]
+                      }
+                      temp={day.avgtemp_c}
+                    />
+                  );
+                })}
               </ScrollView>
             </View>
           </>
         )}
       </SafeAreaView>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
