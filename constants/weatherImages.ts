@@ -1,4 +1,6 @@
-export const weatherImages = {
+import { ImageSourcePropType } from "react-native";
+
+export const weatherImages: { [key: string]: ImageSourcePropType } = {
   "partly cloudy": require("../assets/images/partlycloudy.png"),
   "moderate rain": require("../assets/images/moderaterain.png"),
   "patchy rain nearby": require("../assets/images/moderaterain.png"),
