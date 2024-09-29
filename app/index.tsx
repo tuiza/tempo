@@ -4,11 +4,8 @@ import {
   View,
   Image,
   SafeAreaView,
-  TouchableOpacity,
-  FlatList,
   ScrollView,
   KeyboardAvoidingView,
-  Platform,
 } from "react-native";
 import { EvilIcons } from "@expo/vector-icons";
 import { useCallback, useState } from "react";
@@ -20,6 +17,7 @@ import WeatherData from "@/interfaces/WeatherData";
 import { weatherImages } from "@/constants/weatherImages";
 import getTimeFromDate from "@/utils/getTimeFromDate";
 import ForecastDetails from "@/components/ForecastDetails";
+import OptionsLocations from "@/components/OptionsLocations";
 
 export default function Index() {
   const [showSearch, setShowSearch] = useState(true);
@@ -69,35 +67,12 @@ export default function Index() {
             toggleSearch={toggleSearch}
             handleSearchInput={handleTextDebounce}
           />
-          {/* locations */}
-          {locations.length > 0 && showSearch && (
-            <View className="absolute w-full bg-gray-300 top-16 rounded-3xl ">
-              <FlatList
-                data={locations}
-                renderItem={({ item, index }) => {
-                  // componente
-                  const showBorder = index + 1 != locations.length;
-                  const borderClass =
-                    showBorder && "border-b-2 border-b-gray-400";
-                  return (
-                    <TouchableOpacity
-                      onPress={() => handleLocation(item)}
-                      key={index}
-                      className={`flex-row items-center border-0 p-3 px-4 mb-1 ${borderClass}`}
-                    >
-                      <EvilIcons name="location" size={20} color="black" />
 
-                      <Text
-                        className="text-black text-lg ml-2"
-                        numberOfLines={1}
-                      >
-                        {item.name}, {item.country}
-                      </Text>
-                    </TouchableOpacity>
-                  );
-                }}
-              />
-            </View>
+          {locations.length > 0 && showSearch && (
+            <OptionsLocations
+              handleLocation={handleLocation}
+              locations={locations}
+            />
           )}
         </View>
 
