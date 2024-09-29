@@ -35,7 +35,7 @@ export default function SearchInput({
         className="rounded-full  p-2 m-1"
         onPress={() => toggleSearch()}
       >
-        <EvilIcons name="search" size={20} color="white" />
+        <EvilIcons name="search" size={28} color="white" />
       </TouchableOpacity>
     </View>
   );
