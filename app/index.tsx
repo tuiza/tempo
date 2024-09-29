@@ -19,6 +19,7 @@ import { getLocations, ILocation, getForecast } from "@/api/weather";
 import WeatherData from "@/interfaces/WeatherData";
 import { weatherImages } from "@/constants/weatherImages";
 import getTimeFromDate from "@/utils/getTimeFromDate";
+import ForecastDetails from "@/components/ForecastDetails";
 
 export default function Index() {
   const [showSearch, setShowSearch] = useState(true);
@@ -55,7 +56,7 @@ export default function Index() {
       behavior="height"
       //keyboardVerticalOffset={Platform.select({ ios: 0, android: 20 })}
     >
-      <StatusBar style="dark" />
+      <StatusBar style="light" />
       <Image
         className="absolute w-full h-full"
         blurRadius={70}
@@ -74,6 +75,7 @@ export default function Index() {
               <FlatList
                 data={locations}
                 renderItem={({ item, index }) => {
+                  // componente
                   const showBorder = index + 1 != locations.length;
                   const borderClass =
                     showBorder && "border-b-2 border-b-gray-400";
@@ -129,38 +131,10 @@ export default function Index() {
                   {locationForecast.current?.condition.text}
                 </Text>
               </View>
-              <View className="flex-row justify-between mx-4">
-                <View className="flex-row space-x-2 intems-center">
-                  <Image
-                    source={require("../assets/icons/wind.png")}
-                    className="w-6 h-6"
-                  />
-                  <Text className="text-white font-semibold text-base">
-                    {locationForecast.current?.wind_kph}km
-                  </Text>
-                </View>
-                <View className="flex-row space-x-2 items-center">
-                  <Image
-                    source={require("../assets/icons/drop.png")}
-                    className="w-6 h-6"
-                  />
-                  <Text className="text-white font-semibold text-base">
-                    {locationForecast.current.humidity}%
-                  </Text>
-                </View>
-                <View className="flex-row space-x-2 items-center">
-                  <Image
-                    source={require("../assets/icons/sun.png")}
-                    className="w-6 h-6"
-                  />
-                  <Text className="text-white font-semibold text-base">
-                    {getTimeFromDate(locationForecast.location.localtime).day}
-                  </Text>
-                </View>
-              </View>
+              <ForecastDetails locationForecast={locationForecast} />
             </View>
 
-            <View className="mb-2 space-y-3">
+            <View className="mb-8 space-y-3">
               <View className="flex-row items-cnter mx-5 space-x-2">
                 <EvilIcons name="calendar" size={30} color="white" />
                 <Text className="text-base text-white">Daily Forecast</Text>
@@ -172,7 +146,6 @@ export default function Index() {
               >
                 {locationForecast.forecast?.forecastday?.map((item, index) => {
                   const { day, date } = item;
-                  const days = ["Monday", "Tuesday", "Wendsday"];
                   return (
                     <DailyForecast
                       key={index.toString()}

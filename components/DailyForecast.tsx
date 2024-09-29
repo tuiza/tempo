@@ -10,7 +10,7 @@ type DailyForecastProps = {
 export default function DailyForecast({ img, day, temp }: DailyForecastProps) {
   return (
     <View
-      className="flex justify-center items-center w-24 rounded-3xl py-3 space-y-3"
+      className="flex-1 justify-center items-center w-24 rounded-3xl py-3 space-y-3"
       style={{ backgroundColor: theme.bgWhite(0.15) }}
     >
       <Image source={img} className="h-11 w-11" />
