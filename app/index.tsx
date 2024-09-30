@@ -18,11 +18,13 @@ import { weatherImages } from "@/constants/weatherImages";
 import getTimeFromDate from "@/utils/getTimeFromDate";
 import ForecastDetails from "@/components/ForecastDetails";
 import OptionsLocations from "@/components/OptionsLocations";
+import * as Progress from "react-native-progress";
 
 export default function Index() {
   const [showSearch, setShowSearch] = useState(true);
   const [locations, setLocations] = useState<ILocation[]>([]);
   const [locationForecast, setLocationForecast] = useState<WeatherData>();
+  const [loading, setLoading] = useState(false);
 
   function toggleSearch() {
     setShowSearch(!showSearch);
@@ -40,12 +42,19 @@ export default function Index() {
   const handleTextDebounce = useCallback(debounce(handleSearchInput, 1200), []);
 
   async function handleLocation(location: ILocation) {
-    const locationForecast = await getForecast({
-      city: location.name,
-      day: 7,
-    });
-    setLocationForecast(locationForecast);
-    setShowSearch(!showSearch);
+    try {
+      setLocations([]);
+      setLoading(true);
+      const locationForecast = await getForecast({
+        city: location.name,
+        day: 7,
+      });
+      setLocationForecast(locationForecast);
+      setShowSearch(!showSearch);
+    } catch {
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -60,85 +69,93 @@ export default function Index() {
         blurRadius={70}
         source={require("../assets/images/bg.png")}
       />
-      <SafeAreaView className="flex flex-1 mt-12">
-        <View style={{ height: "7%" }} className="mx-4 relative z-50">
-          <SearchInput
-            showSearch={showSearch}
-            toggleSearch={toggleSearch}
-            handleSearchInput={handleTextDebounce}
-          />
-
-          {locations.length > 0 && showSearch && (
-            <OptionsLocations
-              handleLocation={handleLocation}
-              locations={locations}
-            />
-          )}
+      {loading ? (
+        <View className="flex-1 flex-row justify-center items-center">
+          <Progress.CircleSnail thickness={10} size={140} color={"#0bb3b2"} />
         </View>
+      ) : (
+        <SafeAreaView className="flex flex-1 mt-12">
+          <View style={{ height: "7%" }} className="mx-4 relative z-50">
+            <SearchInput
+              showSearch={showSearch}
+              toggleSearch={toggleSearch}
+              handleSearchInput={handleTextDebounce}
+            />
 
-        {/* forecast */}
-        {locationForecast && (
-          <>
-            <View className="mx-4 justify-around flex-1 ">
-              <Text className="text-white text-center font-bold text-2xl">
-                {locationForecast.location?.name},
-                <Text className="text-lg font-semibold text-gray-300 ml-4">
-                  {" " + locationForecast.location?.region}
-                </Text>
-              </Text>
-              <View className="flex-row justify-center">
-                <Image
-                  source={
-                    weatherImages[
-                      locationForecast.current?.condition?.text
-                        .toLowerCase()
-                        .trimEnd()
-                    ]
-                  }
-                  className="w-52 h-52"
-                />
-              </View>
-              <View className="space-y-2 items-center">
-                <Text className="font-bold text-6xl text-white ml-5">
-                  {locationForecast.current.temp_c}&#176;
-                </Text>
-                <Text className="text-xl text-white tracking-widest">
-                  {locationForecast.current?.condition.text}
-                </Text>
-              </View>
-              <ForecastDetails locationForecast={locationForecast} />
-            </View>
+            {locations.length > 0 && showSearch && (
+              <OptionsLocations
+                handleLocation={handleLocation}
+                locations={locations}
+              />
+            )}
+          </View>
 
-            <View className="mb-8 space-y-3">
-              <View className="flex-row items-cnter mx-5 space-x-2">
-                <EvilIcons name="calendar" size={30} color="white" />
-                <Text className="text-base text-white">Daily Forecast</Text>
+          {/* forecast */}
+          {locationForecast && (
+            <>
+              <View className="mx-4 justify-around flex-1 ">
+                <Text className="text-white text-center font-bold text-2xl">
+                  {locationForecast.location?.name},
+                  <Text className="text-lg font-semibold text-gray-300 ml-4">
+                    {" " + locationForecast.location?.region}
+                  </Text>
+                </Text>
+                <View className="flex-row justify-center">
+                  <Image
+                    source={
+                      weatherImages[
+                        locationForecast.current?.condition?.text
+                          .toLowerCase()
+                          .trimEnd()
+                      ]
+                    }
+                    className="w-52 h-52"
+                  />
+                </View>
+                <View className="space-y-2 items-center">
+                  <Text className="font-bold text-6xl text-white ml-5">
+                    {locationForecast.current.temp_c}&#176;
+                  </Text>
+                  <Text className="text-xl text-white tracking-widest">
+                    {locationForecast.current?.condition.text}
+                  </Text>
+                </View>
+                <ForecastDetails locationForecast={locationForecast} />
               </View>
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{ paddingHorizontal: 15, gap: 15 }}
-              >
-                {locationForecast.forecast?.forecastday?.map((item, index) => {
-                  const { day, date } = item;
-                  return (
-                    <DailyForecast
-                      key={index.toString()}
-                      day={getTimeFromDate(date).dayName}
-                      img={
-                        weatherImages[
-                          day.condition.text.toLowerCase().trimEnd()
-                        ]
-                      }
-                      temp={day.avgtemp_c}
-                    />
-                  );
-                })}
-              </ScrollView>
-            </View>
-          </>
-        )}
-      </SafeAreaView>
+
+              <View className="mb-8 space-y-3">
+                <View className="flex-row items-cnter mx-5 space-x-2">
+                  <EvilIcons name="calendar" size={30} color="white" />
+                  <Text className="text-base text-white">Daily Forecast</Text>
+                </View>
+                <ScrollView
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={{ paddingHorizontal: 15, gap: 15 }}
+                >
+                  {locationForecast.forecast?.forecastday?.map(
+                    (item, index) => {
+                      const { day, date } = item;
+                      return (
+                        <DailyForecast
+                          key={index.toString()}
+                          day={getTimeFromDate(date).dayName}
+                          img={
+                            weatherImages[
+                              day.condition.text.toLowerCase().trimEnd()
+                            ]
+                          }
+                          temp={day.avgtemp_c}
+                        />
+                      );
+                    }
+                  )}
+                </ScrollView>
+              </View>
+            </>
+          )}
+        </SafeAreaView>
+      )}
     </KeyboardAvoidingView>
   );
 }
