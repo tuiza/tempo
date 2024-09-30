@@ -1,4 +1,4 @@
-import { apiKey, BASE_URL } from "@/constants";
+import { BASE_URL } from "@/constants";
 import WeatherData from "@/interfaces/WeatherData";
 import axios from "axios";
 
@@ -16,6 +16,8 @@ export interface ILocation {
   region: string;
   url: string;
 }
+
+const apiKey = process.env.EXPO_PUBLIC_API_KEY;
 
 export async function getForecast(
   params: ForecastParams
