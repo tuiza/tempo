@@ -1,5 +1,4 @@
 import WeatherData from "@/interfaces/WeatherData";
-import getTimeFromDate from "@/utils/getTimeFromDate";
 import { View } from "react-native";
 import ForecastDetail from "./ForecastDetail";
 
@@ -21,7 +20,7 @@ export default function ForecastDetails({ locationForecast }: ForecastDetails) {
       />
 
       <ForecastDetail
-        detail={getTimeFromDate(locationForecast.location.localtime).day + "%"}
+        detail={locationForecast.forecast.forecastday[0].astro.sunrise}
         img={require("../assets/icons/sun.png")}
       />
     </View>

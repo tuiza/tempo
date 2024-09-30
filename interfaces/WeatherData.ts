@@ -39,6 +39,12 @@ interface ForecastDay {
     condition: WeatherCondition;
     uv: number;
   };
+  astro: {
+    sunrise: string;
+    sunset: string;
+    moonrise: string;
+    moonset: string;
+  };
 }
 
 // Definir a estrutura apropriada para os objetos internos do forecastday
