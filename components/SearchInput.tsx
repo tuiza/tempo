@@ -1,17 +1,20 @@
 import { theme } from "@/theme";
 import { EvilIcons } from "@expo/vector-icons";
 import { TextInput, TouchableOpacity, View } from "react-native";
+import * as Progress from "react-native-progress";
 
 type SearchInputProps = {
   showSearch: boolean;
   toggleSearch: () => void;
   handleSearchInput: () => void;
+  loading: boolean;
 };
 
 export default function SearchInput({
   showSearch,
   toggleSearch,
   handleSearchInput,
+  loading,
 }: SearchInputProps) {
   return (
     <View
@@ -35,7 +38,11 @@ export default function SearchInput({
         className="rounded-full  p-2 m-1"
         onPress={() => toggleSearch()}
       >
-        <EvilIcons name="search" size={28} color="white" />
+        {loading ? (
+          <Progress.CircleSnail thickness={2} size={24} color={"white"} />
+        ) : (
+          <EvilIcons name="search" size={32} color="white" />
+        )}
       </TouchableOpacity>
     </View>
   );

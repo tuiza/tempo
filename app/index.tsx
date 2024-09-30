@@ -26,6 +26,7 @@ export default function Index() {
   const [locations, setLocations] = useState<ILocation[]>([]);
   const [locationForecast, setLocationForecast] = useState<WeatherData>();
   const [loading, setLoading] = useState(false);
+  const [searchLoading, setSearchLoading] = useState(false);
 
   function toggleSearch() {
     setShowSearch(!showSearch);
@@ -33,8 +34,13 @@ export default function Index() {
 
   async function handleSearchInput(city: string) {
     if (city.length > 2) {
-      const locations = await getLocations(city);
-      setLocations(locations);
+      try {
+        setSearchLoading(true);
+        const locations = await getLocations(city);
+        setLocations(locations);
+      } finally {
+        setSearchLoading(false);
+      }
     } else {
       setLocations([]);
     }
@@ -102,6 +108,7 @@ export default function Index() {
               showSearch={showSearch}
               toggleSearch={toggleSearch}
               handleSearchInput={handleTextDebounce}
+              loading={searchLoading}
             />
 
             {locations.length > 0 && showSearch && (
@@ -145,7 +152,7 @@ export default function Index() {
                 <ForecastDetails locationForecast={locationForecast} />
               </View>
 
-              <View className="mb-8 space-y-3">
+              <View className="mb-8 space-y-4 items-center">
                 <View className="flex-row items-cnter mx-5 space-x-2">
                   <EvilIcons name="calendar" size={30} color="white" />
                   <Text className="text-base text-white">Daily Forecast</Text>
