@@ -8,7 +8,7 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import { EvilIcons } from "@expo/vector-icons";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import SearchInput from "@/components/SearchInput";
 import DailyForecast from "@/components/DailyForecast";
 import { debounce } from "lodash";
@@ -19,6 +19,7 @@ import getTimeFromDate from "@/utils/getTimeFromDate";
 import ForecastDetails from "@/components/ForecastDetails";
 import OptionsLocations from "@/components/OptionsLocations";
 import * as Progress from "react-native-progress";
+import { getData, storeData } from "@/store/locationStore";
 
 export default function Index() {
   const [showSearch, setShowSearch] = useState(true);
@@ -51,11 +52,32 @@ export default function Index() {
       });
       setLocationForecast(locationForecast);
       setShowSearch(!showSearch);
+      storeData(location.name);
     } catch {
     } finally {
       setLoading(false);
     }
   }
+
+  async function fecthMyWeatherData() {
+    try {
+      setLoading(true);
+      let lastCitySearched = await getData();
+      let cityName = "Ananindeua";
+      if (lastCitySearched) cityName = lastCitySearched;
+      const locationForecast = await getForecast({
+        city: cityName,
+        day: 7,
+      });
+      setLocationForecast(locationForecast);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    fecthMyWeatherData();
+  }, []);
 
   return (
     <KeyboardAvoidingView
