@@ -32,13 +32,13 @@
 
 ## :dart: Sobre ##
 
-Aplicativo para verficar a previsão de tempo 
+Aplicativo de previsão de tempo 
 
 ## :sparkles: Funcionalidades ##
 
-:heavy_check_mark: Previsão de tempo;
+:heavy_check_mark: Previsão de tempo
 
-:heavy_check_mark: Busca por cidades;
+:heavy_check_mark: Busca por cidades
 
 
 ## :rocket: Tecnologias ##
