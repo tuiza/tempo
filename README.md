@@ -1,50 +1,107 @@
-# Welcome to your Expo app 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-## Get started
+<h1 align="center">Liven Store</h1>
 
-1. Install dependencies
+<div align="center" id="top"> 
+  <img src="src\assets\app.gif" alt="Video do app" title="Demonstracao" />
 
-   ```bash
-   npm install
-   ```
+  &#xa0;
 
-2. Start the app
+  <!-- <a href="https://memoriadisney.netlify.com">Demo</a> -->
+</div>
 
-   ```bash
-    npx expo start
-   ```
 
-In the output, you'll find options to open the app in a
+<!-- Status -->
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+<!-- <h4 align="center"> 
+	🚧  Memoria Disney 🚀 Em construção...  🚧
+</h4> 
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+<hr> -->
 
-## Get a fresh project
+<p align="center">
+  <a href="#dart-sobre">Sobre</a> &#xa0; | &#xa0; 
+  <a href="#sparkles-funcionalidades">Funcionalidades</a> &#xa0; | &#xa0;
+  <a href="#iphone">Demonstração</a> &#xa0; | &#xa0;
+  <a href="#rocket-tecnologias">Tecnologias</a> &#xa0; | &#xa0;
+  <a href="#white_check_mark-pré-requisitos">Pré requisitos</a> &#xa0; | &#xa0;
+  <a href="#checkered_flag-começando">Começando</a> &#xa0; | &#xa0;
+  <a href="https://github.com/luizamarlene" target="_blank">Autora</a>
+</p>
 
-When you're ready, run:
+<br>
+
+## :dart: Sobre ##
+
+Loja de produtos desenvolvido com o React Native
+
+## :sparkles: Funcionalidades ##
+
+:heavy_check_mark: Visualização de produtos;
+
+:heavy_check_mark: Produtos agrupados por categoria;
+
+:heavy_check_mark: Adicionar e Remover produtos do carrinho;
+
+:heavy_check_mark: Lista de favoritos;
+
+
+## 📱 Demonstração ##
+
+- O apk está disponível em: [APK](https://github.com/tuiza/livenStore/releases)
+
+<div align="center" id="top"> 
+  <img src="src\assets\demo.gif" alt="Video do app" title="Demonstracao" />
+
+  &#xa0;
+
+  <!-- <a href="https://memoriadisney.netlify.com">Demo</a> -->
+</div>
+
+
+## :rocket: Tecnologias ##
+
+As seguintes ferramentas foram usadas na construção do projeto:
+
+- [React Native](https://reactnative.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Lottie React Native](https://github.com/lottie-react-native/lottie-react-native)
+- [Styled Components](https://styled-components.com/)
+- [React Native Vector Icons](https://github.com/oblador/react-native-vector-icons)
+- [React Navigation](https://reactnavigation.org/)
+
+## :white_check_mark: Pré requisitos ##
+
+Antes de começar :checkered_flag:, você precisa ter o Expo instalado em sua máquina, pra isso siga esse  tutorial: [Instalação Expo](https://docs.expo.dev/get-started/installation/)
+
+## :checkered_flag: Começando ##
 
 ```bash
-npm run reset-project
+# Clone este repositório
+$ git clone https://github.com/tuiza/livenStore
+
+# Entre na pasta
+$ cd livenStore
+
+# Instale as dependências
+$ yarn
+
+# Para iniciar o projeto no android
+$ yarn android
+
+# O app vai inicializar em <http://localhost:3000>
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## :memo: Licença ##
 
-## Learn more
+Este projeto está sob licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para mais detalhes.
 
-To learn more about developing your project with Expo, look at the following resources:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Feito com :heart: por: 
+<a href="https://github.com/tuiza" target="_blank">Luiza Marlene</a> |
 
-## Join the community
 
-Join our community of developers creating universal apps.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+&#xa0;
+
+<a href="#top">Voltar para o topo</a>
