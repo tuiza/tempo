@@ -3,7 +3,7 @@
 <h1 align="center">Liven Store</h1>
 
 <div align="center" id="top"> 
-  <img src="src\assets\app.gif" alt="Video do app" title="Demonstracao" />
+  <img src="src\assets\videos\tempo.gif" alt="Video do app" title="Demonstracao" />
 
   &#xa0;
 
