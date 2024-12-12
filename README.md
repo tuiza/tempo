@@ -1,6 +1,6 @@
 
 
-<h1 align="center">Liven Store</h1>
+<h1 align="center">Tempo</h1>
 
 <div align="center" id="top"> 
   <img src="src\assets\videos\tempo.gif" alt="Video do app" title="Demonstracao" />
@@ -98,7 +98,7 @@ Este projeto está sob licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para m
 
 
 Feito com :heart: por: 
-<a href="https://github.com/tuiza" target="_blank">Luiza Marlene</a> |
+<a href="https://github.com/tuiza" target="_blank">Luiza Marlene</a> 
 
 
 
