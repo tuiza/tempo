@@ -3,7 +3,7 @@
 <h1 align="center">Tempo</h1>
 
 <div align="center" id="top"> 
-  <img src="src\assets\videos\tempo.gif" alt="Video do app" title="Demonstracao" />
+  <img src="assets\videos\tempo.gif" alt="Video do app" title="Demonstracao" />
 
   &#xa0;
 
@@ -22,7 +22,6 @@
 <p align="center">
   <a href="#dart-sobre">Sobre</a> &#xa0; | &#xa0; 
   <a href="#sparkles-funcionalidades">Funcionalidades</a> &#xa0; | &#xa0;
-  <a href="#iphone">Demonstração</a> &#xa0; | &#xa0;
   <a href="#rocket-tecnologias">Tecnologias</a> &#xa0; | &#xa0;
   <a href="#white_check_mark-pré-requisitos">Pré requisitos</a> &#xa0; | &#xa0;
   <a href="#checkered_flag-começando">Começando</a> &#xa0; | &#xa0;
@@ -33,30 +32,13 @@
 
 ## :dart: Sobre ##
 
-Loja de produtos desenvolvido com o React Native
+Aplicativo para verficar a previsão de tempo 
 
 ## :sparkles: Funcionalidades ##
 
-:heavy_check_mark: Visualização de produtos;
+:heavy_check_mark: Previsão de tempo;
 
-:heavy_check_mark: Produtos agrupados por categoria;
-
-:heavy_check_mark: Adicionar e Remover produtos do carrinho;
-
-:heavy_check_mark: Lista de favoritos;
-
-
-## 📱 Demonstração ##
-
-- O apk está disponível em: [APK](https://github.com/tuiza/livenStore/releases)
-
-<div align="center" id="top"> 
-  <img src="src\assets\demo.gif" alt="Video do app" title="Demonstracao" />
-
-  &#xa0;
-
-  <!-- <a href="https://memoriadisney.netlify.com">Demo</a> -->
-</div>
+:heavy_check_mark: Busca por cidades;
 
 
 ## :rocket: Tecnologias ##
@@ -65,10 +47,10 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 - [React Native](https://reactnative.dev/)
 - [TypeScript](https://www.typescriptlang.org/)
-- [Lottie React Native](https://github.com/lottie-react-native/lottie-react-native)
-- [Styled Components](https://styled-components.com/)
+- [Native Wind | Tailwind CSS ](https://www.nativewind.dev/)
 - [React Native Vector Icons](https://github.com/oblador/react-native-vector-icons)
-- [React Navigation](https://reactnavigation.org/)
+- [Axios](https://axios-http.com/ptbr/docs/intro)
+- [Weather API and Geolocation Developer API](https://www.weatherapi.com/)
 
 ## :white_check_mark: Pré requisitos ##
 
@@ -78,10 +60,10 @@ Antes de começar :checkered_flag:, você precisa ter o Expo instalado em sua m�
 
 ```bash
 # Clone este repositório
-$ git clone https://github.com/tuiza/livenStore
+$ git clone https://github.com/tuiza/tempo
 
 # Entre na pasta
-$ cd livenStore
+$ cd tempo
 
 # Instale as dependências
 $ yarn
