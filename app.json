@@ -21,7 +21,7 @@
         "backgroundColor": "#ffffff"
       },
       "softwareKeyboardLayoutMode": "pan",
-      "package": "com.tempo"
+      "package": "com.sol.e.toro"
     },
     "web": {
       "bundler": "metro",
