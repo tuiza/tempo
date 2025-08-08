@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: 20.x
 
-      - name: Intall deps
+      - name: Intall depedencies
         run: npm install
 
       - name: Run tests
