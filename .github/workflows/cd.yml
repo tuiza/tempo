@@ -1,0 +1,12 @@
+name: CD
+
+on: push
+
+jobs:
+  CD:
+    name: Continuous Delivery
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Chechout repository
+        uses: actions/checkout@v3
