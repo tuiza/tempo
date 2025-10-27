@@ -1,6 +1,3 @@
-import WeatherData from "@/interfaces/WeatherData";
-import { theme } from "@/theme";
-import getTimeFromDate from "@/utils/getTimeFromDate";
 import { View, Image, Text, ImageSourcePropType } from "react-native";
 
 type ForecastDetail = {
