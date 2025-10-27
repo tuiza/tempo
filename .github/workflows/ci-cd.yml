@@ -43,9 +43,9 @@ jobs:
       - name: Setup EAS
         uses: expo/expo-github-action@v8
         with:
-          eas-versio: latest
+          eas-version: latest
           packager: npm
           token: ${{ secrets.EAS_EXPO_TOKEN }}
 
       - name: Build
-        run: eas build --platform android --profile preview --non-interactive --no-wait 
+        run: eas build --platform android --profile preview --non-interactive --no-wait
